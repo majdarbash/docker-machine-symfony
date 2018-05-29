@@ -97,6 +97,7 @@ applicationStart()
     container_exists=$(docker-machine ssh $1 "docker container ls --format='{{.Names}}' -a | grep app | wc -l")
     if [ "$container_exists" -eq "1" ]; then
         echoInfo "Container exists, skipping creating it"
+        echoInfo "Starting docker container"
         docker-machine ssh $1 "docker container start app"
     else
         echoInfo "Container not found, creating it"
@@ -105,13 +106,6 @@ applicationStart()
 
     echoInfo "Installing composer"
     docker-machine ssh $1 "docker exec -t app bash -c '/app/install_composer.sh'"
-
-
-
-    echoInfo "Starting docker container"
-
-    echoInfo "Mount"
-    docker-machine ssh $1 "docker exec -t crm bash -c 'cd /app && composer install'"
 
     echoSuccess "All great, application started, enjoy your day;)\n"
 }
