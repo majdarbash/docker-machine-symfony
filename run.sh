@@ -106,9 +106,11 @@ applicationStart()
 
     echoInfo "Downloading installation files"
     docker-machine ssh $1 "docker exec -t app bash -c 'curl https://raw.githubusercontent.com/majdarbash/docker-machine-symfony/master/install_composer.sh --output /tmp/install_composer.sh && chmod a+x /tmp/install_composer.sh'"
+    docker-machine ssh $1 "docker exec -t app bash -c 'curl https://raw.githubusercontent.com/majdarbash/docker-machine-symfony/master/install_composer.sh --output /tmp/install_packages.sh && chmod a+x /tmp/install_packages.sh'"
 
     echoInfo "Installing composer"
     docker-machine ssh $1 "docker exec -t app bash -c '/tmp/install_composer.sh'"
+    docker-machine ssh $1 "docker exec -t app bash -c '/tmp/install_packages.sh'"
 
     echoSuccess "All great, application started, enjoy your day;)\n"
 }
