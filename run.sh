@@ -101,11 +101,14 @@ applicationStart()
         docker-machine ssh $1 "docker container start app"
     else
         echoInfo "Container not found, creating it"
-        docker-machine ssh $1 "docker run -d -p 80:80 --name='app' -v $PWD:/app --entrypoint='php'  php:7.1-cli  /app/loop.php"
+        docker-machine ssh $1 "docker run -d -p 80:80 --name='app' -v $PWD:/app --entrypoint='php'  php:7.1-cli -r \"while(true) { echo 'Running'; sleep(1); }\""
     fi
 
+    echoInfo "Downloading installation files"
+    docker-machine ssh $1 "docker exec -t app bash -c 'curl https://raw.githubusercontent.com/majdarbash/docker-machine-symfony/master/install_composer.sh --output /tmp/install_composer.sh && chmod a+x /tmp/install_composer.sh'"
+
     echoInfo "Installing composer"
-    docker-machine ssh $1 "docker exec -t app bash -c '/app/install_composer.sh'"
+    docker-machine ssh $1 "docker exec -t app bash -c '/tmp/install_composer.sh'"
 
     echoSuccess "All great, application started, enjoy your day;)\n"
 }
