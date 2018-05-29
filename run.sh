@@ -110,6 +110,8 @@ applicationStart()
 
     echoInfo "Installing composer"
     docker-machine ssh $1 "docker exec -t app bash -c '/tmp/install_composer.sh'"
+    
+    echoInfo "Installing required packages"
     docker-machine ssh $1 "docker exec -t app bash -c '/tmp/install_packages.sh'"
 
     echoSuccess "All great, application started, enjoy your day;)\n"
