@@ -6,7 +6,7 @@ set -o errexit
 # @args:    property-message
 echoProperties ()
 {
-  echo "\t\033[0;35m- $1 \033[0m"
+  printf "\t\033[0;35m- $1 \033[0m"
 }
 
 # @info:    Prints info messages
@@ -21,21 +21,21 @@ echoInfo ()
 # @args:    error-message
 echoError ()
 {
-  echo "\033[0;31mFAIL\n\n$1 \033[0m"
+  printf "\033[0;31mFAIL\n\n$1 \033[0m"
 }
 
 # @info:    Prints warning messages
 # @args:    warning-message
 echoWarn ()
 {
-  echo "\033[0;33m[WARN] $1 \033[0m"
+  printf "\033[0;33m[WARN] $1 \033[0m"
 }
 
 # @info:    Prints success messages
 # @args:    success-message
 echoSuccess ()
 {
-  echo "\033[0;32m$1 \033[0m"
+  printf "\033[0;32m$1 \033[0m"
 }
 
 dockerMachineCommandExists()
